@@ -10,22 +10,27 @@ This repository contains Dockerfile of [PHP](https://secure.php.net/) for [Docke
 
 This docker image can create a virtual environment for PHP using [PHPBrew](http://phpbrew.github.io/phpbrew/) and [virtPHP](http://virtphp.org).
 
-When you want to use PHP, run below commands to install PHP that you want to.
+When you want to use PHP, run below commands to install PHP that you want.
 
 [1] Confirm installable versions by PHPBrew.
 
 	phpbrew known
 
-[2] Install PHP 5.6.19 if you needed its version.
+[2] Install PHP from PHPBrew.
 
+	# Example:
+	#
+	# Install PHP 5.6.19
+	#
 	phpbrew install 5.6.19
 
-And you want to create a virtual environment for PHP, run below commands to create its environment.
+[3] Create a virtual environment for PHP using virtPHP.
 
-[Example]
-
-Create a virtual environment named 'php56env' with PHP 5.6.19 when you logged in with the user named 'centos'
-
+	# Example: 
+	#
+	# Create a virtual environment named 'php56env' with PHP 5.6.19 
+	# when you logged in with the user named 'centos'
+	#
 	virtphp create --php-bin-dir=/home/centos/.phpbrew/php/php-5.6.19/bin php56env
 
 ## PHPBrew Version
