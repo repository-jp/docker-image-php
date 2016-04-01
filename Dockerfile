@@ -13,6 +13,13 @@ LABEL name="PHP Environment Image" \
 USER root
 WORKDIR /tmp
 
+# Remove user named centos.
+RUN userdel -r centos
+
+# Create user named php.
+RUN groupadd php && useradd -s /bin/bash -g php php && passwd -d php
+RUN sed -i -e 's/AllowUsers centos/AllowUsers php/g' /etc/ssh/sshd_config
+
 # Install necessary packages.
 RUN yum install -y readline-devel \
                    libxml2 \
@@ -52,27 +59,25 @@ USER root
 WORKDIR /root
 
 RUN phpbrew init
-RUN echo "cd $HOME" >> /root/.bashrc
-RUN echo "" >> /root/.bashrc
-RUN echo "# Source PHPbrew" >> /root/.bashrc
-RUN echo "export PHPBREW_SET_PROMPT=1" >> /root/.bashrc
-RUN echo "export PHPBREW_BIN=$HOME/.phpbrew/bin" >> /root/.bashrc
-RUN echo "export PHPBREW_HOME=$HOME/.phpbrew" >> /root/.bashrc
-RUN echo "export PHPBREW_ROOT=$HOME/.phpbrew" >> /root/.bashrc
-RUN echo "[[ -e $HOME/.phpbrew/bashrc ]] && source $HOME/.phpbrew/bashrc" >> /root/.bashrc
+RUN echo "" >> ~/.bashrc
+RUN echo "# Source PHPbrew" >> ~/.bashrc
+RUN echo "export PHPBREW_SET_PROMPT=1" >> ~/.bashrc
+RUN echo "export PHPBREW_BIN=~/.phpbrew/bin" >> ~/.bashrc
+RUN echo "export PHPBREW_HOME=~/.phpbrew" >> ~/.bashrc
+RUN echo "export PHPBREW_ROOT=~/.phpbrew" >> ~/.bashrc
+RUN echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bashrc
 
-USER centos
-WORKDIR /home/centos
+USER php
+WORKDIR /home/php
 
 RUN phpbrew init
-RUN echo "cd $HOME" >> /home/centos/.bashrc
-RUN echo "" >> /home/centos/.bashrc
-RUN echo "# Source PHPbrew" >> /home/centos/.bashrc
-RUN echo "export PHPBREW_SET_PROMPT=1" >> /home/centos/.bashrc
-RUN echo "export PHPBREW_BIN=$HOME/.phpbrew/bin" >> /home/centos/.bashrc
-RUN echo "export PHPBREW_HOME=$HOME/.phpbrew" >> /home/centos/.bashrc
-RUN echo "export PHPBREW_ROOT=$HOME/.phpbrew" >> /home/centos/.bashrc
-RUN echo "[[ -e $HOME/.phpbrew/bashrc ]] && source $HOME/.phpbrew/bashrc" >> /home/centos/.bashrc
+RUN echo "" >> ~/.bashrc
+RUN echo "# Source PHPbrew" >> ~/.bashrc
+RUN echo "export PHPBREW_SET_PROMPT=1" >> ~/.bashrc
+RUN echo "export PHPBREW_BIN=~/.phpbrew/bin" >> ~/.bashrc
+RUN echo "export PHPBREW_HOME=~/.phpbrew" >> ~/.bashrc
+RUN echo "export PHPBREW_ROOT=~/.phpbrew" >> ~/.bashrc
+RUN echo "[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc" >> ~/.bashrc
 
 # Configure container.
 USER root
