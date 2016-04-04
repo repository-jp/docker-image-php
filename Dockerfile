@@ -7,7 +7,7 @@ LABEL name="PHP Environment Image" \
       centos-version="6.6" \
       phpbrew-version="1.20.6" \
       virtphp-version="0.5.2" \
-      vendor="REPOSIORY <http://www.repositories.jp>" \
+      vendor="REPOSITORY <http://www.repositories.jp>" \
       license="MIT"
 
 USER root
